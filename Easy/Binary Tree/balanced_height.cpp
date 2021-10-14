@@ -1,4 +1,5 @@
 #include<iostream>
+#include<algorithm>
 using namespace std;
 
 struct node
@@ -25,6 +26,7 @@ int countNodes(node* root){
 }
 
 bool balancedHeight(node* root){
+    // TC = O(n^2)
     if(root == NULL){
         return true;
     }
@@ -44,7 +46,37 @@ bool balancedHeight(node* root){
 
     if(diff <= 1){
         return true;
+    }else{
+        return false;
     }
+}
+
+bool balancedHeightOptimized(node* root, int* height){
+    // TC = O(n)
+    if(root == NULL){
+        *height = 0;
+        return true;
+    }
+    int left_height = 0, right_height = 0;
+    
+    if(balancedHeightOptimized(root->left, &left_height) == false){
+        return false;
+    }
+
+    if(balancedHeightOptimized(root->right, &right_height) == false){
+        return false;
+    }
+
+    *height = max(left_height, right_height) + 1;
+
+    int diff = abs(left_height - right_height);
+
+    if(diff <= 1){
+        return true;
+    }else{
+        return false;
+    }
+
 }
 
 int main(){
@@ -64,7 +96,10 @@ int main(){
     root->right->left = new node(6);
     root->right->right = new node(7);
 
-    cout<<balancedHeight(root);
+    cout<<balancedHeight(root)<<endl;
+
+    int height = 0;
+    cout<<balancedHeightOptimized(root, &height);
 
     return 0;   
 }
