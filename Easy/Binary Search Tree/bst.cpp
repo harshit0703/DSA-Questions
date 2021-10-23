@@ -28,7 +28,6 @@ node* insert(node* root, int val){
         //else update root right
         root->right = insert(root->right, val);
     }
-    return root;
 }
 
 void inorder(node* root){
