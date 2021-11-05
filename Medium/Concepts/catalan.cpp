@@ -16,6 +16,8 @@ int catalan(int n){
 }
 
 int main(){
-    cout<<catalan(4);
+    for(int i=0; i<10; i++){
+        cout<<catalan(i)<<" ";
+    }
     return 0;
 }
