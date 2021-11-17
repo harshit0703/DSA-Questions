@@ -3,7 +3,6 @@ using namespace std;
 
 vector<int> subarrMax(vector<int> arr, int k){
     vector<int> ans;
-    int maxEle = INT_MIN;
 
     int i = 0;
     int j = 0;
@@ -13,19 +12,22 @@ vector<int> subarrMax(vector<int> arr, int k){
         return ans;
     }
 
+    queue<int> q;
+
     while(j < arr.size()){
-        if(arr[j] > maxEle){
-            maxEle = arr[j];
+        while(q.size()>0 && q.back() < arr[j]){
+            q.pop();
         }
+        q.push(arr[j]);
 
         if(j - i + 1 < k){
             j++;
         }
 
         else if(j - i + 1 == k){
-            ans.push_back(maxEle);
-            if(arr[i] == maxEle){
-                maxEle = INT_MIN;
+            ans.push_back(q.front());
+            if(arr[i] == q.front()){
+                q.pop();
             }
             i++;
             j++;
