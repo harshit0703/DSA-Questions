@@ -35,8 +35,8 @@ int solve(string str, int k){
 
 int main()
 {
-    string str = "aabacbebebe";
-    int ans = solve(str, 3);
+    string str = "aabacbebebe";     // pick toys is the same code variation where this string represents the typr of toys and 
+    int ans = solve(str, 3);        // we need to maximise k uniques toys that can be purchased
     cout<<ans;
     return 0;
 }
