@@ -1,6 +1,11 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+// knapsack if of three types
+// 1) fractional - GREEDY here you can add items in fraction as well
+// 2) 0-1 - DP here you can only add an item as a whole
+// 3) unbounded - repetetion of the same elements is allowed
+
 int knapsack(int val[], int wt[], int max_wt, int n){
 
     if(max_wt == 0 || n == 0){
