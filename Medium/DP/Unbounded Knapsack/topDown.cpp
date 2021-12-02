@@ -21,9 +21,12 @@ int unboundedKnapsack(int val[], int wt[], int W, int n){
                 DP[i][j] = DP[i-1][j];
             }
 
-            int included = DP[i][j - wt[i-1]] + val[i-1];
-            int not_included = DP[i-1][j];
-            DP[i][j] = max(included, not_included);
+            else{
+                int included = DP[i][j - wt[i - 1]] + val[i - 1];
+                int not_included = DP[i - 1][j];
+                DP[i][j] = max(included, not_included);
+            }
+
         }
     }
     
