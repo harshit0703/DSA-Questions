@@ -9,9 +9,6 @@ int firstocc(int arr[], int st, int en, int key){
             res = mid;
             en = mid - 1;
         }
-        else if(key < arr[mid]){
-            en = mid - 1;
-        }
         else{
             st = mid + 1;
         }
