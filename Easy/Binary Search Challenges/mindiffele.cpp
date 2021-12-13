@@ -48,7 +48,7 @@ int findCeil(int arr[], int n, int key){
 int binarySearch(int arr[], int n, int key){
     int st = 0;
     int en = n-1;
-    int res = -1;
+    int res = -1;   
 
     while(st <= en){
         int mid = st + (en - st)/2;
