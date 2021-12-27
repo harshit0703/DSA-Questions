@@ -114,6 +114,81 @@ bool targetPairSum(vector<int>arr, int k){
     return false;
 }
 
+int recordBreaking(vector<int>arr){
+    int maxTillNow = 0; // to handle the first edge case
+    int days = 0;
+    for(int i = 0; i < arr.size(); i++){
+        if(i == arr.size() - 1 && arr[i] > maxTillNow){
+            days++;
+        }
+        else if(arr[i] > maxTillNow && arr[i] > arr[i + 1]){
+            days++;
+            maxTillNow = arr[i];
+        }
+    }
+    return days;
+}
+
+void soe(int n){
+    int arr[n+1];
+    for(int i = 0; i < n; i++){
+        arr[i] = 1;
+    }
+    for(int i = 2; i < n; i++){
+        for(int j = i*i; j < n; j+=i){
+            arr[j] = 0;
+        }
+    }
+    for(int i = 2; i < n; i++){
+        if(arr[i] == 1){
+            cout<<i<<" ";
+        }
+    }
+}
+
+void primeSieve(int n){
+    int arr[n+1];
+    for(int i = 0; i < n; i++){
+        arr[i] = 1;
+    }
+    for(int i = 2; i < n; i++){
+        for(int j = i*i; j < n; j+=i){
+            arr[j] = 0;
+        }
+    }
+    
+    int i = 2;
+    while(n != 1){
+        if(n % i == 0 && arr[i] == 1){
+            n /= i;
+            cout<<i<<" ";
+            i = 2;
+        }
+        else{
+            i++;
+        }
+    }
+
+}
+
+void subarraySum(vector<int> arr, int sum){
+    int windowSum = 0;
+    int st = 0;
+    int en = 0;
+    // simply following a two point arrpoach since all elements are positive
+    while(windowSum != sum){
+        if(windowSum < sum){
+            windowSum += arr[st];
+            st++;
+        }
+        else if(windowSum > sum){
+            windowSum -= arr[en];
+            en++;
+        }
+    }
+    cout<<en<<" "<<st-1;
+}
+
 int main()
 {
     // binary search = searching an element in a sorted array in O(log n) time complexity
@@ -142,7 +217,22 @@ int main()
 
     // pair sum 
     vector<int> pairSum = {2, 4, 7, 11, 14, 16, 20, 21};
-    cout<<targetPairSum(pairSum, 31);
+    cout<<targetPairSum(pairSum, 31)<<endl;
+
+    // record breaking days 
+    vector<int> days = {1, 2, 0, 7, 2, 0, 2, 2};
+    cout<<recordBreaking(days)<<endl;
+
+    // sieve of eratosthenes 
+    // this algorithm helps to find the prime nos in a given range more efficiently
+    // soe(50);
+
+    // prime seive is used to give the prime factorization of a given number
+    primeSieve(96);
+
+    // subarray sum
+    vector<int> v = {1, 3, 8, 4, 2, 9, 11, 5};
+    // subarraySum(v, 15);
 
     return 0;
 }
