@@ -9,13 +9,15 @@ int main(){
     for(int i=0; i<n; i++){
         cin>>arr[i];
     }
+    int currsum = 0;
     int maxsum = 0;
     
     for(int i=0; i<n; i++){
-        maxsum += arr[i];
-        if (maxsum < 0){
-            maxsum = 0;
+        currsum += arr[i];
+        if (currsum < 0){
+            currsum = 0;
         }
+        maxsum = max(currsum, maxsum);
     }
 
     cout<<maxsum;

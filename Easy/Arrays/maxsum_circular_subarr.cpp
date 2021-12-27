@@ -1,19 +1,27 @@
 #include<iostream>
 using namespace std;
 
-int kadane(int arr[], int n, int cdn){
-    int sum = 0;
-    for(int i=0; i<n; i++){
-        sum += arr[i];
-        if(sum < 0 && cdn == 1){
-            // this condition is for all positive elements
-            sum = 0;
-        }else if(sum > 0 && cdn == -1){
-            // this condition is for all negative elements
-            sum = 0;
+int kadane(int arr[], int n){
+    int currSum = 0;
+    int maxSum = 0;
+    for(int i = 0; i < n; i++){
+        currSum += arr[i];
+        if(currSum < 0){
+            currSum = 0;
         }
+        maxSum = max(currSum, maxSum);
     }
-    return sum;
+    return maxSum;
+}
+
+int kadaneWrap(int arr[], int n){
+    int totalSum = 0;
+    for(int i = 0; i < n; i++){
+        totalSum += arr[i];
+        arr[i] *= -1;
+    }
+    int nonWrapSum = kadane(arr, n);
+    return totalSum + nonWrapSum;
 }
 
 int main(){
@@ -26,14 +34,9 @@ int main(){
         cin>>arr[i];
     }
 
-    int nonwrapsum = kadane(arr, n, 1);
-    int totalsum = 0;
-    for(int i=0; i<n; i++){
-        totalsum += arr[i];
-        arr[i] *= -1;
-    }
+    int nonwrapsum = kadane(arr, n);
 
-    int wrapsum = totalsum + kadane(arr, n, -1);
+    int wrapsum = kadaneWrap(arr, n);
 
     cout<<wrapsum<<" "<<nonwrapsum;
 
