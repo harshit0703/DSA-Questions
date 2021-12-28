@@ -191,6 +191,9 @@ void subarraySum(vector<int> arr, int sum){
 
 int main()
 {
+
+    // ------------------------------ ARRAY RIVISION --------------------------------------
+
     // binary search = searching an element in a sorted array in O(log n) time complexity
     vector<int> arr = {1, 3, 4, 5, 8, 10, 13};
     int key = 8;
@@ -233,6 +236,10 @@ int main()
     // subarray sum
     vector<int> v = {1, 3, 8, 4, 2, 9, 11, 5};
     // subarraySum(v, 15);
+
+    
+    
+    // ------------------------------ 2-D ARRAY RIVISION --------------------------------------
 
     return 0;
 }
