@@ -7,13 +7,20 @@ int main(){
     int i = 0;
     int max_len = 0, curr_len = 0;
     while(arr[i] != '\0'){
-        if(arr[i] != " "){
+        if(arr[i] != ' '){
             curr_len++;
-        }else{
+        }
+        else{
             max_len = max(max_len, curr_len);
+            // cout<<curr_len<<endl;
             curr_len = 0;
+        }
+        if (arr[i + 1] == '\0')
+        {
+            max_len = max(max_len, curr_len);
         }
         i++;
     }
+    cout<<max_len;
     return 0;
 }
