@@ -1,6 +1,8 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+string keypad[] = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+
 void printReverse(string str){
     if(str.length() == 0){
         return;
@@ -62,12 +64,27 @@ void toh(int n, char src, char dest, char helper){
     toh(n-1, helper, dest, src);
 }
 
+void keypadCombinations(string str, string ans){
+    if(str.length() == 0){
+        cout<<ans<<endl;
+        return;
+    }
+    char ch = str[0];
+    str = str.substr(1);
+    string code = keypad[ch - '0'];
+    for(int i = 0; i < code.length(); i++){
+        keypadCombinations(str, ans + code[i]);
+    }
+
+}
+
 int main()
 {
     string str = "haarsshiit";
     // printReverse(str);
     // cout<<removeX(str);
     // cout<<removeDup(str);
-    toh(3, 'A', 'B', 'C');
+    // toh(3, 'A', 'B', 'C');
+    keypadCombinations("23", "");
     return 0;
 }
