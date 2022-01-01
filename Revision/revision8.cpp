@@ -83,6 +83,30 @@ void permutationLetterCase(string str, string ans){
     
 }
 
+void balPar(int open, int close, string ans){
+
+    if(open == 0 && close == 0){
+        cout<<ans<<endl;
+        return;
+    }
+    if(ans.length() == 0){
+        balPar(open - 1, close, ans + '(');
+    }
+    else{
+        if(open == 0){
+            balPar(open, close - 1, ans + ')');
+        }
+        else{
+            balPar(open - 1, close, ans + '(');
+            if(open < close){
+                // if open == close it means equal pairs are present and hence you cannot add closing bracket here
+                balPar(open, close - 1, ans + ')');
+            }
+        }
+    }
+    
+}
+
 int main()
 {
     string str = "a1B2";
@@ -97,6 +121,7 @@ int main()
     // permutationSpaces(str, "");
     // permutationCase(str, "");   
     // assuming the string will always contain small case alphabets
-    permutationLetterCase(str, "");
+    // permutationLetterCase(str, "");
+    balPar(2, 2, "");
     return 0;
 }
