@@ -107,6 +107,32 @@ void balPar(int open, int close, string ans){
     
 }
 
+void binary(int n, string ans, int one, int zero){
+    if(n == 0){
+        cout<<ans<<endl;
+        return;
+    }
+    if(ans.length() == 0){
+        binary(n-1, ans + '1', one + 1, zero);
+    }
+    else{
+        binary(n-1, ans + '1', one + 1, zero);
+        if(one > zero){
+            binary(n-1, ans + '0', one, zero + 1);
+        }
+    }
+}
+
+void josephus(int k, int idx, vector<int>v, int &ans){
+    if(v.size() == 1){
+        ans = v[0];
+        return;
+    }
+    idx = (idx + k - 1) % (v.size());
+    v.erase(v.begin() + idx);
+    josephus(k, idx, v, ans);
+}
+
 int main()
 {
     string str = "a1B2";
@@ -122,6 +148,14 @@ int main()
     // permutationCase(str, "");   
     // assuming the string will always contain small case alphabets
     // permutationLetterCase(str, "");
-    balPar(2, 2, "");
+    // balPar(2, 2, "");
+    // binary(3, "", 0, 0);
+    vector<int> v;
+    for(int i = 0; i < 40; i++){
+        v.push_back(i + 1);
+    }
+    int ans;
+    josephus(7, 0, v, ans);
+    cout<<ans;
     return 0;
 }
