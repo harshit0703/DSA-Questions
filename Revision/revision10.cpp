@@ -85,24 +85,64 @@ void iterativePreorder(node* &root){
     }
 }
 
-void iterativeInorder(node* root){
-    if(root == NULL){
-        return;
-    }
+vector<int> iterativeInorder(node* root){
+    vector<int> inorder;
+    node* temp = root;
     stack<node*> st;
-    st.push(root);
-    while(!st.empty()){
-        node* temp = st.top();
-        st.pop();
-        if(temp->left != NULL){
-            st.push(temp->left);
+    
+    while(true){
+        if(temp != NULL){
+            st.push(temp);
+            temp = temp->left;
         }
-        // now topmost node in the stack will be the left most node
-        cout<<temp->data;
-        if(temp->right != NULL){
-            st.push(temp->right);
+        else{
+            if(st.empty()){
+                break;
+            }
+            temp = st.top();
+            st.pop();
+            inorder.push_back(temp->data);
+            temp = temp->right;
         }
     }
+
+    return inorder;
+}
+
+vector<int> iterativePostorder(node* root){
+    vector<int> postorder;
+    stack<node*>st1, st2;
+    st1.push(root);
+
+    while(!st1.empty()){
+        node* temp = st1.top();
+        st1.pop();
+        st2.push(temp);
+        if(temp->left != NULL){
+            st1.push(temp->left);
+        }
+        if(temp->right != NULL){
+            st1.push(temp->right);
+        }
+    }
+
+    while(!st2.empty()){
+        node* ans = st2.top();
+        st2.pop();
+        postorder.push_back(ans->data);
+    }
+
+
+    return postorder;
+}
+
+int heightBT(node* root){
+    if(root == NULL){
+        return 0;
+    }
+    int lHeight = heightBT(root->left);
+    int rHeight = heightBT(root->right);
+    return max(lHeight, rHeight) + 1;
 }
 
 int main()
@@ -119,6 +159,14 @@ int main()
     // levelorder(root);
     // iterativePreorder(root);
     // iterativeInorder(root);
+
+    vector<int> ans = iterativePostorder(root);
+    for (int i = 0; i < ans.size(); i++)
+    {
+        cout<<ans[i]<<" ";
+    }
+    
+    cout<<heightBT(root);
 
     return 0;
 }
