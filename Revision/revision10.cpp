@@ -145,6 +145,82 @@ int heightBT(node* root){
     return max(lHeight, rHeight) + 1;
 }
 
+bool balanced(node* root){
+    // O(n^2)
+    if(root == NULL){
+        return true;
+    }
+
+    if(balanced(root->left) && balanced(root->right)){
+        int lHeight = heightBT(root->left);
+        int rHeight = heightBT(root->right);
+        int ans = abs(rHeight - lHeight);
+        return ans <= 1;
+    }
+
+    return false;
+}
+
+int balancedOpt(node* root){
+    // O(n)
+    if(root == NULL){
+        return 0;
+    }
+    int lHeight = balancedOpt(root->left);
+    int rHeight = balancedOpt(root->right);
+    if(lHeight == -1 || rHeight == -1){
+        return -1;
+    }
+    if(abs(rHeight - lHeight) > 1){
+        return -1;
+    }
+
+    return max(lHeight, rHeight) + 1;
+}
+
+int diameter(node* root, int &dia){
+    if(root == NULL){
+        return 0;
+    }
+
+    // diameter = lheight + rheight + 1
+
+    int lHeight = diameter(root->left, dia);
+    int rHeight = diameter(root->right, dia);
+
+    dia = max(dia, lHeight + rHeight + 1);
+    // we included the current node and make a complete path
+
+    return 1 + max(lHeight, rHeight);
+    // did not make a complete path
+}
+
+int maxPathSum(node* root, int &sum){
+    if(root == NULL){
+        return 0;
+    }
+
+    int lPath = (root->left, sum);
+    int rPath = (root->right, sum);
+
+    sum = max(sum, root->data + lPath + rPath);
+
+    return root->data + max(lPath, rPath);
+}
+
+bool identicalTrees(node* root1, node* root2){
+    if(root1 == NULL || root2 == NULL){
+        return (root1 == root2);
+    }
+
+    if(identicalTrees(root1->left, root2->left) && identicalTrees(root1->right, root2->right)){
+        return (root1->data == root2->data);
+    }
+
+    return false;
+
+}
+
 int main()
 {
     node* root = new node(1);
@@ -166,7 +242,22 @@ int main()
         cout<<ans[i]<<" ";
     }
     
-    cout<<heightBT(root);
+    cout<<heightBT(root)<<endl;
+
+    if(balanced(root)){
+        cout<<"the given tree is a balanced tree"<<endl;
+    }
+
+    cout<<balancedOpt(root)<<endl;
+    // if balancedOpt == -1 then the tree is not balanced
+
+    int dia = 0;
+    diameter(root, dia);
+    cout<<dia<<endl;
+
+    int sum = 0;
+    maxPathSum(root, sum);
+    cout<<sum;
 
     return 0;
 }
