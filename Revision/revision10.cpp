@@ -221,6 +221,52 @@ bool identicalTrees(node* root1, node* root2){
 
 }
 
+vector<int> zigZag(node* root){
+    vector<int> v;
+    stack<int> st;
+    queue<node*> q;
+    int lvl = 0;
+    q.push(root);
+    q.push(NULL);
+
+    while(!q.empty()){
+        node* temp = q.front();
+        q.pop();
+        
+        if(temp != NULL){
+            if(temp->left != NULL){
+                q.push(temp->left);
+            }
+            if(temp->right != NULL){
+                q.push(temp->right);
+            }
+
+            if(lvl % 2 == 0){
+                v.push_back(temp->data);
+            }
+            else{
+                st.push(temp->data);
+            }
+        }
+        else{
+            if(q.empty()){
+                break;
+            }
+            if(lvl % 2 != 0){
+                while(!st.empty()){
+                    int data = st.top();
+                    st.pop();
+                    v.push_back(data);
+                }
+            }
+            q.push(NULL);
+            lvl++;
+        }
+    }
+
+    return v;
+}
+
 int main()
 {
     node* root = new node(1);
@@ -257,7 +303,13 @@ int main()
 
     int sum = 0;
     maxPathSum(root, sum);
-    cout<<sum;
+    cout<<sum<<endl;
+
+    vector<int> spiral = zigZag(root);
+
+    for(int i : spiral){
+        cout<<i<<" ";
+    }
 
     return 0;
 }
