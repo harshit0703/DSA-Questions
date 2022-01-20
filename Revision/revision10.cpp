@@ -267,6 +267,98 @@ vector<int> zigZag(node* root){
     return v;
 }
 
+vector<int> leftView(node* root){
+    if(root == NULL){
+        return {};
+    }
+
+    vector<int>ans;
+    queue<node*> q;
+    q.push(root);
+    q.push(NULL);
+
+    node* prev = NULL;
+
+    while(!q.empty()){
+
+        node* temp = q.front();
+        q.pop();
+
+        if(temp != NULL){
+            if(prev == NULL){
+                ans.push_back(temp->data);
+            }
+
+            if(temp->left != NULL){
+                q.push(temp->left);
+            }
+
+            if(temp->right != NULL){
+                q.push(temp->right);
+            }           
+
+        }
+
+        else{
+            if(q.empty()){
+                break;
+            }
+            q.push(NULL);
+        }
+
+        prev = temp;
+
+    }
+
+    return ans;
+}
+
+
+vector<int> rightView(node* root){
+    if(root == NULL){
+        return {};
+    }
+
+    vector<int>ans;
+    queue<node*> q;
+    q.push(root);
+    q.push(NULL);
+
+    node* prev = NULL;
+
+    while(!q.empty()){
+
+        node* temp = q.front();
+        q.pop();
+
+        if(temp != NULL){
+
+            if(temp->left != NULL){
+                q.push(temp->left);
+            }
+
+            if(temp->right != NULL){
+                q.push(temp->right);
+            }           
+
+        }
+
+        else{
+            ans.push_back(prev->data);
+            if(q.empty()){
+                break;
+            }
+            q.push(NULL);
+        }
+
+        prev = temp;
+
+    }
+
+    return ans;
+}
+
+
 int main()
 {
     node* root = new node(1);
@@ -282,32 +374,44 @@ int main()
     // iterativePreorder(root);
     // iterativeInorder(root);
 
-    vector<int> ans = iterativePostorder(root);
-    for (int i = 0; i < ans.size(); i++)
-    {
-        cout<<ans[i]<<" ";
-    }
+    // vector<int> ans = iterativePostorder(root);
+    // for (int i = 0; i < ans.size(); i++)
+    // {
+    //     cout<<ans[i]<<" ";
+    // }
     
-    cout<<heightBT(root)<<endl;
+    // cout<<heightBT(root)<<endl;
 
-    if(balanced(root)){
-        cout<<"the given tree is a balanced tree"<<endl;
-    }
+    // if(balanced(root)){
+    //     cout<<"the given tree is a balanced tree"<<endl;
+    // }
 
-    cout<<balancedOpt(root)<<endl;
-    // if balancedOpt == -1 then the tree is not balanced
+    // cout<<balancedOpt(root)<<endl;
+    // // if balancedOpt == -1 then the tree is not balanced
 
-    int dia = 0;
-    diameter(root, dia);
-    cout<<dia<<endl;
+    // int dia = 0;
+    // diameter(root, dia);
+    // cout<<dia<<endl;
 
-    int sum = 0;
-    maxPathSum(root, sum);
-    cout<<sum<<endl;
+    // int sum = 0;
+    // maxPathSum(root, sum);
+    // cout<<sum<<endl;
 
-    vector<int> spiral = zigZag(root);
+    // vector<int> spiral = zigZag(root);
 
-    for(int i : spiral){
+    // for(int i : spiral){
+    //     cout<<i<<" ";
+    // }
+
+    // vector<int> left = leftView(root);
+
+    // for(int i : left){
+    //     cout<<i<<" ";
+    // }
+
+    vector<int> right = rightView(root);
+
+    for(int i : right){
         cout<<i<<" ";
     }
 
