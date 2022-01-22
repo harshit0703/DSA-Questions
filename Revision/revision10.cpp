@@ -359,6 +359,24 @@ vector<int> rightView(node* root){
 }
 
 
+node* LCA(node* root, node* p, node* q){
+    if(root == NULL || root == p || root == q){
+        return root;
+    }
+
+    node* left = LCA(root->left, p, q);
+    node* right = LCA(root->right, p, q);
+
+    if(left && right){
+        return root;
+    }
+    else if (left == NULL){
+        return right;
+    }
+
+    return left;
+}
+
 int main()
 {
     node* root = new node(1);
