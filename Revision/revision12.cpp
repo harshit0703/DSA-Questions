@@ -69,6 +69,29 @@ int distance(node* lca, node* n1, node* n2){
 
 }
 
+void flatten(node* root){
+    if (root == NULL){
+        return ;
+    }
+
+    flatten(root->left);
+    flatten(root->right);
+
+    if(root->left != NULL){
+        node* temp = root->left;
+        root->left = NULL;
+
+        node* ptr = root->right;
+        root->right = temp;
+
+        while(temp->right != NULL){
+            temp = temp->right;
+        }
+
+        temp->right = ptr;
+    }
+}
+
 int main()
 {
     node *root = new node(1);
