@@ -200,8 +200,8 @@ int maxPathSum(node* root, int &sum){
         return 0;
     }
 
-    int lPath = (root->left, sum);
-    int rPath = (root->right, sum);
+    int lPath = max(0, (root->left, sum));
+    int rPath = max(0, (root->right, sum));
 
     sum = max(sum, root->data + lPath + rPath);
 
@@ -432,6 +432,9 @@ int main()
     for(int i : right){
         cout<<i<<" ";
     }
+
+    node* ans = LCA(root, root->left, root->right);
+    cout<<ans->data;
 
     return 0;
 }

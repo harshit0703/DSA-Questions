@@ -179,20 +179,6 @@ int height(node* root){
     return max(height(root->left), height(root->right)) + 1;
 }
 
-int diameter(node* root){
-    if(root == NULL){
-        return 0;
-    }
-
-    // two cases the diameter can pass throug the root or can avoid it
-
-    int ldia = diameter(root->left);
-    int rdia = diameter(root->right);
-    int currdia = ldia + rdia + 1;  // complete path
-
-    return max(currdia, max(ldia + 1, rdia + 1));
-}
-
 void sumReplacement(node* root){
     if(root == NULL){
         return;
