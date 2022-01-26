@@ -96,6 +96,40 @@ node* deleteBST(node* root, int key){
 
 }
 
+bool isBST(node* root, node* min=NULL, node*max=NULL){
+    if(root == NULL){
+        return true;
+    }
+
+    if(min != NULL && root->data <= min->data){
+        return false;
+    }
+
+    if(max != NULL && root->data >= max->data){
+        return false;
+    }
+
+    bool left = isBST(root->left, min, root);
+    bool right = isBST(root->right, root, max);
+
+    return left && right;
+
+}
+
+node* BstSorArr(vector<int> nums, int st, int en){
+    if(st > en){
+        return NULL;
+    }
+
+    int middle = st + (en - st)/2;
+    node* root = new node(nums[middle]);
+
+    root->left = BstSorArr(nums, st, middle - 1);
+    root->right = BstSorArr(nums, middle + 1, en);
+
+    return root;
+}
+
 void printBST(node* root){
     if(root == NULL){
         return ;
@@ -118,8 +152,15 @@ int main()
     // printBST(root);
     // inorder of bst is a sorted array
     // cout<<searchBST(root, 7);
-    printBST(root);
+    // printBST(root);
     root = deleteBST(root, 1);
-    printBST(root);
+    // printBST(root);
+
+    // cout<<isBST(root, NULL, NULL);
+
+    vector<int> nums = {1, 2, 3, 4, 5};
+    node* root2 = BstSorArr(nums, 0, nums.size() - 1);
+    printBST(root2);
+
     return 0;
 }
