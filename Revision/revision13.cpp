@@ -140,6 +140,80 @@ void printBST(node* root){
     printBST(root->right);
 }
 
+pair<int, bool> solve(node* root, int st, int en){
+    if(root == NULL){
+        return {0, true};
+    }
+
+    pair<int, bool>left = solve(root->left, st, root->data);
+    pair<int, bool>right = solve(root->right, root->data, en);
+
+    if(root->data > st && root->data < en){
+        if(left.second && right.second){
+            return {left.first + right.first + 1, true};
+        }
+    }
+
+    return {max(left.first, right.first), false};
+
+}
+
+int largestBstInBt(node* root){
+
+    if(root == NULL){
+        return 0;
+    }
+
+    pair<int, bool> ans= solve(root, INT_MIN, INT_MAX);
+
+    return ans.first;
+
+}
+
+void swap(int* a, int* b){
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void calcPointers(node* root, node** prev, node** first, node** last, node** middle){
+    if(root == NULL){
+        return;
+    }
+
+    calcPointers(root->left, prev, first, last, middle);
+
+    if(prev && (*prev)->data > root->data){
+        if(*first == NULL){
+            *first = *prev;
+            *middle = root; 
+        }
+        else{
+            *last = root;
+        }
+    }
+
+    *prev = root;
+
+    calcPointers(root->right, prev, first, last, middle);
+
+}
+
+void restoreBst(node* root){
+    node* prev, * first, * last, * middle;
+
+    first = last = middle = prev = NULL;
+
+    calcPointers(root, &prev, &first, &last, &middle);
+
+    if(first && last){
+        swap(&first->data, &last->data);
+    }else{
+        swap(&first->data, &middle->data);
+    }
+
+}
+
 int main()
 {
     node* root = NULL;
