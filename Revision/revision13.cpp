@@ -214,6 +214,30 @@ void restoreBst(node* root){
 
 }
 
+struct NodeData{
+    int maxVal;
+    int minVal;
+    int size;
+};
+
+NodeData recoverBst(node* root){
+    if(root == NULL){
+        return NodeData{INT_MIN, INT_MAX, 0};
+    }
+
+    NodeData left = recoverBst(root->left);
+    NodeData right = recoverBst(root->right);
+
+    if(root->data > left.maxVal && root->data < right.minVal){
+        // it is a bst
+        return {max(root->data, right.maxVal), min(root->data, left.minVal), left.size + right.size + 1};
+    }
+
+    // not a bst
+    return{INT_MAX, INT_MIN, max(left.size, right.size)};
+
+}
+
 int main()
 {
     node* root = NULL;
