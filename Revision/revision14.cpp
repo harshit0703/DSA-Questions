@@ -61,8 +61,35 @@ bool nQueens(vector<vector<int>> &board, int row){
 
 }
 
+void swap(vector<int> &v, int a, int b){
+    int temp = v[a];
+    v[a] = v[b];
+    v[b] = temp;
+}
+
+void dnfSort(vector<int> &v){
+    int st = 0;
+    int middle = 0;
+    int en = v.size() - 1;
+
+    while(middle < en){
+        if(v[middle] == 0){
+            swap(v, middle, st);
+            st++;
+            middle++;
+        }else if(v[middle] == 2){
+            swap(v, middle, en);
+            en--;
+        }else{
+            middle++;
+        }
+    }
+}
+
 int main()
-{   int n;
+   {   
+       
+    int n;
     cin>>n;
     vector<vector<int>> board(n, vector<int> (n, 0));
     // this will initialize the n*n vector with 0
@@ -73,5 +100,12 @@ int main()
         }
         cout<<endl;
     }
+
+    // vector<int> v = {0, 2, 1, 2, 0};
+    // dnfSort(v);
+    // for(auto i : v){
+    //     cout<<i<<" ";
+    // }
+    
     return 0;
 }
