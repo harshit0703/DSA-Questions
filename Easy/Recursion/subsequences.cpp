@@ -9,8 +9,8 @@ void print_subseq(string str, string ans){
     }
     char ch = str[0];
     string rem_str = str.substr(1);
-    print_subseq(rem_str, ans);
     print_subseq(rem_str, ans + ch);
+    print_subseq(rem_str, ans);
 }
 
 int main(){
