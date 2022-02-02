@@ -1,6 +1,35 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+stack<int> minStack;
+int minele;
+
+void push(int val){
+    if(minStack.empty()){
+        minele = val;
+        minStack.push(val);
+    }else if (val <= minele){
+        minStack.push(2*val - minele);
+        minele = val;
+    }else{
+        minStack.push(val);
+    }
+}
+
+int pop(){
+    if(minStack.empty()){
+        return -1;
+    }else if(minStack.top() < minele){
+        minele = 2 * minele - minStack.top();
+    }
+    minStack.pop();
+}
+
+int minEle(){
+    if(minStack.empty()) return -1;
+    return minele;
+}
+
 vector<int> findNgr(vector<int> v){
     stack<int> st;
     vector<int> ans;
