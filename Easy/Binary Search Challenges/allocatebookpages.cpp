@@ -3,22 +3,25 @@
 using namespace std;
 
 bool isValid(int arr[], int n, int pages, int k){
-    if(k > n){
-        return false;
-    }
-    int count = 1;
+    if(k > n) return false;
+
     int sum = 0;
-    for(int i=0; i<n; i++){
-        sum += arr[i];
-        if(sum > pages){
-            count++;
-            sum = arr[i];
+    int ans = 1;
+    for(int i = 0; i < n; i++){
+        if(arr[i] > pages){
+            return false;
         }
+
+        if(sum + arr[i] > pages){
+            sum = arr[i];
+            ans++;
+            if(ans > k)return false;
+        }
+
+        sum += arr[i];
     }
-    if(count == k){
-        return true;
-    }
-    return false;
+
+    return true;
 }
 
 int allocatePages(int arr[], int n, int k){
@@ -53,8 +56,8 @@ int allocatePages(int arr[], int n, int k){
 int main(){
     // we will be given with an array of book pages and a number of students to whom we need to alot these books such that 
     // the max pages held by any student is min (to balance the load among them)
-    int arr[] = {10, 20, 30, 40};       // this array may or may not be sorted
-    int k = 2;                          // no of students
+    int arr[] = {5, 7, 100, 11};       // this array may or may not be sorted
+    int k = 4;                          // no of students
     int ans = allocatePages(arr, 4, k);
     cout<<ans;
     return 0;
