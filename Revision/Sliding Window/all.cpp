@@ -180,7 +180,7 @@ int pickToys(string str){
 
 int main()
 {
-    // cout<<cntAnagrams("aaba", "aabaabaa")<<endl;
+    cout<<cntAnagrams("abc", "abaacbabc")<<endl;
     vector<int> v = {1, 3, -1, -3, 5, 3, 6, 7};
     vector<int> ans = maxOfAllSubarraysizeK(v, 3);
     // for(auto i : ans){
@@ -190,7 +190,7 @@ int main()
     // cout<<largestSubarrayofSumK({4, 1, 1, 1, 2, 3, 5}, 5);
     // cout<<longlestSubstrKunique("aabacbebebe", 3);
     // cout<<largestSubstrwithoutRepeatingChar("abcabcbb");
-    cout<<pickToys("abaccab");
+    // cout<<pickToys("abaccab");
 
     return 0;
 }
