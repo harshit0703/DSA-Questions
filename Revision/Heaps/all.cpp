@@ -117,6 +117,52 @@ vector<int> topkFrequent(vector<int> v, int k){
     return ans;
 }
 
+double calcDistance(vector<int> v)
+{
+    double dis = pow(v[0], 2) + pow(v[1], 2);
+    return sqrt(dis);
+}
+
+vector<vector<int>> kClosestOrigin(vector<vector<int>> &points, int k)
+{
+
+    priority_queue<pair<double, vector<int>>> q;
+    vector<vector<int>> ans;
+
+    for (int i = 0; i < points.size(); i++)
+    {
+        double distance = calcDistance(points[i]);
+        q.push({distance, points[i]});
+        if (q.size() > k)
+            q.pop();
+    }
+
+    while (!q.empty())
+    {
+        ans.push_back(q.top().second);
+        q.pop();
+    }
+
+    return ans;
+}
+
+int connectRopes(vector<int> v){
+    priority_queue<int, vector<int>, greater<int>> q;
+    for(auto i : v) q.push(i);
+    int cost = 0;
+    while(q.size() > 1){
+        int first = q.top();
+        q.pop();
+        int second = q.top();
+        q.pop();
+        int connecting_cost = first + second;
+        cost += connecting_cost;
+        q.push(connecting_cost);
+    }
+
+    return cost;
+}
+
 void test(){
     pair<int, int> p = {1, 4};
     pair<int, int> q = {3, 5};
@@ -174,6 +220,9 @@ int main()
     for(auto i : Kfreq){
         cout<<i<<" ";
     }
+    cout<<endl;
+
+    cout<<connectRopes({1, 2, 3, 4, 5});
 
     return 0;
 }
