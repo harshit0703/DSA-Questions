@@ -160,6 +160,36 @@ int largestRectBinaryMatrix(vector<vector<int>> v){
     return ans;
 }
 
+bool knows(vector<vector<int>> v, int a, int b){
+    if(v[a][b] == 1)return true;
+    return false;
+}
+
+int celebrity(vector<vector<int>> v){
+    stack<int> st;
+    for(int i = 0; i < v.size(); i++) st.push(i);
+
+    while(st.size() > 1){
+        int a = st.top(); st.pop();
+        int b = st.top(); st.pop();
+        if(knows(v, a, b)){
+            st.push(b);
+        }else{
+            st.push(a);
+        }
+    }
+
+    int ans = st.top();
+    int zeros = 0;
+    int ones = 0;
+    for(int i = 0; i < v.size(); i++){
+        if(v[ans][i] == 0)zeros++;
+        if(v[i][ans] == 1)ones++;
+    }
+    if(zeros != v.size() || ones != v.size() - 1)return -1;
+
+    return ans;
+}
 
 int main()
 {
@@ -168,7 +198,9 @@ int main()
     // for(auto i : NGR){
     //     cout<<i<<" ";
     // }
-    int ans = MAH(v);
-    cout<<ans;
+    // int ans = MAH(v);
+    // cout<<ans;
+    vector<vector<int>> x = {{0, 1, 0}, {0, 0, 0}, {0, 1, 0}};
+    cout<<celebrity(x);
     return 0;
 }
