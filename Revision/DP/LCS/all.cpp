@@ -135,6 +135,35 @@ string PrintSCS(string a, int n, string b, int m){
     }
 }
 
+bool isPalindrome(string str){
+    int i = 0;
+    int j = str.length() - 1;
+    while(i < j){
+        if(str[i] != str[j])return false;
+        i++;
+        j--;
+    }
+
+    return true;
+}
+
+void palindromicSubSeq(string str, string ans, string &lps){
+    if(str.length() == 0){
+        if(isPalindrome(ans)){
+            // int len = ans.length();
+            // lps = max(len, lps);
+            if(lps.length() < ans.length()) lps = ans;
+        }
+        return;
+    }
+
+    char ch = str[0];
+    str = str.substr(1);
+    palindromicSubSeq(str, ans + ch, lps);
+    palindromicSubSeq(str, ans, lps);
+
+}
+
 int main()
 {
     // subsequence is a part of the string which may not be continuous but the order of the elements will remain the same
@@ -147,5 +176,7 @@ int main()
     cout<<PrintSCS("aggtab", 6, "gxtxayb", 7) << endl;
     cout<<PrintSCS("geek", 4, "eke", 3) << endl;
     cout<<SCS("geek", 4, "eke", 3) << endl;
+    string n = "";
+    palindromicSubSeq("agbcba", "", n); cout<<n;
     return 0;
 }
