@@ -7,7 +7,7 @@ bool scrambledStr(string a, string b){
         return true;
     }
 
-    if(a.length() <= 0){
+    if(a.length() <= 0){    // verify this part
         return false;
     }
 

@@ -132,8 +132,8 @@ int main()
     cout<<subsetSumTopDown(arr, 9, 6)<<endl;
     int arr1[] = {1, 5, 3};
     cout<<equalSumPartition(arr1, 3)<<endl;
-    int arr2[] = {2, 3, 5, 8, 10};
-    cout<<countSubsetTopDown(arr2, 10, 5)<<endl;
+    int arr2[] = {0, 0, 0, 0, 1};
+    cout<<countSubsetTopDown(arr2, 1, 5)<<endl;
     int arr3[] = {2, 5, 3, 6};
     cout<<coinChange(arr3, 10, 4)<<endl;
     return 0;
