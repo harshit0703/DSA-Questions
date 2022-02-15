@@ -19,7 +19,7 @@ void inorder(node* root){
     inorder(root->right);
 }
 
-node* mirror(node * root){
+node* mirror(node* root){
     if(root == NULL) return root;
 
     node* left = mirror(root->right);
@@ -40,5 +40,7 @@ int main()
     cout<<endl;
     node* root2 = mirror(root);
     inorder(root2);
+    cout<<endl;
+    inorder(root);
     return 0;
 }
