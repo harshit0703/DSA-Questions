@@ -54,6 +54,30 @@ void sumTreeOpt(node* root, int* ans){
     
 }
 
+bool isSumTree(node* root, int* sum){
+    if(root == NULL){
+        *sum = 0; return true;
+    }
+
+    if(root->left == NULL && root->right == NULL){
+        *sum = root->data; return true;
+    }
+
+    int leftsum = 0, rightsum = 0;
+
+    bool left = isSumTree(root->left, &leftsum);
+    bool right = isSumTree(root->right, &rightsum);
+
+    if(left == true && right == true){
+        if(root->data == leftsum + rightsum){
+            *sum = root->data + leftsum + rightsum;
+            return true;
+        }
+    }
+
+    return false;
+}
+
 int main()
 {
     node* root = new node(10);
@@ -69,6 +93,9 @@ int main()
     int temp = 0;
     sumTreeOpt(root, &temp);
     inorder(root);
+    cout<<endl;
+    int sum = 0;
+    cout<<isSumTree(root, &sum);
 
     return 0;
 }
