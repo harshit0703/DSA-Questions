@@ -12,34 +12,34 @@ struct node{
     }
 };
 
-unordered_map<node*, node*> childToParent;
-
-node* mapParents(node* root, node* target){
+node *mapParents(node *root, int target, map<node *, node *> &childToParent)
+{
     queue<node*> q;
     q.push(root);
     childToParent[root] = NULL;
-    node* ans;
+    node* ans = NULL;
 
     while(!q.empty()){
         node* temp = q.front(); q.pop();
-        if(temp == target) ans = temp;
+        if(temp->data == target) ans = temp;
         if(temp->left){
             q.push(temp->left);
-            childToParent[temp->left] = root;
+            childToParent[temp->left] = temp;
         }
         if(temp->right){
             q.push(temp->right);
-            childToParent[temp->right] = root;
+            childToParent[temp->right] = temp;
         }
     }
 
     return ans;
 }
 
-int calcTime(node* target){
+int calcTime(node *target, map<node *, node *> &childToParent)
+{
     int time = 0;
     queue<node*> q; q.push(target);
-    unordered_map<node*, bool> isVisited;
+    map<node*, bool> isVisited;
     isVisited[target] = true;
 
     while(!q.empty()){
@@ -47,19 +47,19 @@ int calcTime(node* target){
         bool flag = false;
         for(int i = 0; i < q.size(); i++){
             node* temp = q.front(); q.pop();
-        if(temp->left && isVisited.find(temp->left) != isVisited.end()){
+        if(temp->left && !isVisited[temp->left]){
             q.push(temp->left);
             isVisited[temp->left] = true;
             flag = true;
         }
 
-        if(temp->right && isVisited.find(temp->right) != isVisited.end()){
+        if(temp->right && !isVisited[temp->right]){
             q.push(temp->right);
             isVisited[temp->right] = true;
             flag = true;
         }
 
-        if(childToParent.find(temp) != childToParent.end() && isVisited.find(childToParent[temp]) != isVisited.end()){
+        if(childToParent[temp] && !isVisited[childToParent[temp]]){
             q.push(childToParent[temp]);
             isVisited[childToParent[temp]] = true;
             flag = true;
@@ -71,16 +71,20 @@ int calcTime(node* target){
     return time;
 }
 
-int burnBt(node* root,node* target){
+int burnBt(node* root,int target){
     if(root == NULL) return 0;
 
     // the whole problem is divided into three steps
     // first to keep a track for all the parents
     // finding the target node
     // burning the binary tree and calculating the time accordingly
-
-    node* res = mapParents(root, target);
-    int ans = calcTime(res);
+    map<node*, node*> childToParent;
+    node* res = mapParents(root, target, childToParent);
+    int ans = calcTime(res, childToParent);
+    for (auto i : childToParent)
+    {
+        cout << i.first << " " << i.second << endl;
+    }
     return ans;
 }
 
@@ -92,7 +96,12 @@ int main()
     root->left->right = new node(4);
     root->right->right = new node(5);
     root->right->right->right = new node(6);
-    node* target = new node(4);
-    cout<<burnBt(root, target);
+    map<node *, node *> x;
+    x[root] = root->right;
+    x[root->right] = root->left;
+    for(auto i : x){
+        cout<<i.first->data<<" "<<i.second->data<<endl;
+    }
+    cout<<burnBt(root, 4);
     return 0;
 }
