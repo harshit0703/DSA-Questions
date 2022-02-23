@@ -16,27 +16,20 @@ struct node
 
 };
 
+
 void flatten(node*root){
-    if(root == NULL || (root->left == NULL && root->right == NULL)){
-        return;     // if single element is present in the tree there is no need to flatten it
-    }
+    
+    if(!root) return;
 
-    if(root->left != NULL){
-        flatten(root->left);
-
-        node* temp = root->right;
-        root->right = root->left;
-        root->left = NULL;
-
-        node* t = root->right;
-        while(t->right != NULL){
-            t = t->right;
-        }
-        t->right = temp;
-
-    }
+    static node *prev = NULL;
 
     flatten(root->right);
+    flatten(root->left);
+
+    root->right = prev;
+    root->left = NULL;
+
+    prev = root;
 
 }
 
