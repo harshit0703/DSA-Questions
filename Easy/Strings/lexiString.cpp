@@ -33,8 +33,8 @@ string lexiStr(string reorder, string str){
 
 int main()
 {
-    string reorder = "polikvjmnhytgbvfredcxswqaz";
-    string str = "abcd";
+    string reorder = "qwryupcsfoghjkldezvxbintma";
+    string str = "ativedoc";
     string ans = lexiStr(reorder, str);
     cout<<ans;
     return 0;
