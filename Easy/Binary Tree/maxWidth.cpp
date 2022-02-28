@@ -16,25 +16,33 @@ struct node
     }
 };
 
-int maxWidth(node* root){
-    if(root == NULL) return 0;
-    queue<pair<node*, int>> q;
+int maxWidth(node *root)
+{
+    if (root == NULL)
+        return 0;
+    queue<pair<node *, int>> q;
     q.push({root, 0});
     int ans = 0;
 
-    while(!q.empty()){
+    while (!q.empty())
+    {
         int size = q.size();
         int minIdx = q.front().second;
         int first, last;
 
-        for(int i = 0; i < size; i++){
+        for (int i = 0; i < size; i++)
+        {
             int currIdx = q.front().second - minIdx;
-            node* temp = q.front().first;
+            node *temp = q.front().first;
             q.pop();
-            if(i == 0) first = currIdx;
-            if(i == size - 1) last = currIdx;
-            if(temp->left) q.push({temp->left, 2*currIdx + 1}); 
-            if(temp->right) q.push({temp->right, 2*currIdx + 2}); 
+            if (i == 0)
+                first = currIdx;
+            if (i == size - 1)
+                last = currIdx;
+            if (temp->left)
+                q.push({temp->left, (long long)2 * currIdx + 1});
+            if (temp->right)
+                q.push({temp->right, (long long)2 * currIdx + 2});
         }
 
         ans = max(ans, last - first + 1);
@@ -65,7 +73,7 @@ int main()
     root->right->right = new node(7);
     root->right->right->right = new node(7);
 
-    cout<<maxWidth(root);
+    cout << maxWidth(root);
 
     return 0;
 }
