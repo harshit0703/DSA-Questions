@@ -12,7 +12,8 @@ bool cyclePresent(pair<int, int> p, vector<int> adj[], vector<int> &visited)
     {
         if (!visited[it])
         {
-            return cyclePresent({it, node}, adj, visited);
+            if (cyclePresent({it, node}, adj, visited))
+                return true;
         }
         else if (parent != it)
             return true;
