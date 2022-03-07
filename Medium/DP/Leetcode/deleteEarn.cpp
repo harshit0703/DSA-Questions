@@ -1,55 +1,40 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int solve(vector<int> v)
+int deleteEarn(vector<int> &nums, int idx, vector<int> &dp)
 {
 
-    // base conditions
-    if (v.size() == 0)
+    if (idx >= nums.size())
         return 0;
-    if (v.size() == 1)
-        return v[0];
 
-    // we can chose any element in the whole vector to start with
+    if (dp[idx] != -1)
+        return dp[idx];
 
-    int ans = INT_MIN;
+    int pts = nums[idx];
+    int curr = nums[idx];
+    int temp = idx + 1;
 
-    for (int i = 0; i < v.size(); i++)
+    while (temp < nums.size() && curr == nums[temp])
     {
-        int j = 0;
-        vector<int> temp;
-        // suppose we chose  the ith element we need to make another vector not including ith element and its predecessor and successors
-        while (j < v.size() && j != i)
-        {
-            if (abs(v[i] - v[j] != 1))
-            {
-                temp.push_back(v[j]);
-            }
-            j++;
-        }
-
-        // for (auto i : temp)
-        //     cout << i << endl;
-
-        int sum = solve(temp) + v[i];
-        ans = max(ans, sum);
+        pts += nums[idx];
+        temp++;
     }
 
-    return ans;
-}
+    while (temp < nums.size() && nums[temp] - curr == 1)
+    {
+        temp++;
+    }
 
-int deleteEarn(vector<int> &v)
-{
-    if (v.size() == 1)
-        return v[0];
+    int earn = deleteEarn(nums, temp, dp) + pts;
+    int dontEarn = deleteEarn(nums, idx + 1, dp);
 
-    int ans = solve(v);
-    return ans;
+    return dp[idx] = max(earn, dontEarn);
 }
 
 int main()
 {
-    vector<int> v = {2, 3, 4};
-    cout << deleteEarn(v);
+    vector<int> nums = {2, 3, 3, 3, 2, 4};
+    vector<int> dp(20001, -1);
+    cout << deleteEarn(nums, 0, dp);
     return 0;
 }
