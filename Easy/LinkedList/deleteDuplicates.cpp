@@ -66,7 +66,6 @@ node *removeDuplicates(node *head)
 
             prev->next = head->next;
         }
-
         else
             prev = prev->next;
 
