@@ -1,48 +1,54 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-bool isValid(string str, string ans)
+string smallestSubSeq(string str)
 {
-    int i = 0, j = 0;
-    while (i < str.length() && j < ans.length())
+    // we will be requiring multiple items
+    // a cnt array to store the frequency of the elements in the string
+    // a visited array to make sure which elements are present in the stack
+    // a stack to make sure the given sub seq is lexicographically smallest possible
+
+    vector<int> cnt(26, 0);
+    vector<int> visited(26, 0);
+    stack<char> st;
+
+    for (int i = 0; i < str.size(); i++)
     {
-        if (str[i] == ans[j])
-            j++;
-        i++;
+        cnt[str[i] - 'a']++;
     }
 
-    if (j == ans.length())
-        return true;
-
-    return false;
-}
-
-void solve(string str, string ans, string &given, string &res)
-{
-    if (str.length() == 0)
+    for (int i = 0; i < str.size(); i++)
     {
-        if (isValid(given, ans) && res.length() == 0)
+        cnt[str[i] - 'a']--;
+        // to decrease the number of elements present inside the remaining string
+
+        if (visited[str[i] - 'a'] == 1)
+            continue;
+        // if already present in the array we dont need to do anything
+
+        while (!st.empty() && st.top() > str[i] && cnt[st.top() - 'a'] != 0)
         {
-            res = ans;
-            return;
+            // we can remove the elements from the stack which are bigger than the current element and are also present after  this element inside the string
+            visited[st.top() - 'a'] = 0;
+            st.pop();
         }
+        visited[str[i] - 'a'] = 1;
+        st.push(str[i]);
     }
 
-    for (int i = 0; i < str.length(); i++)
+    string ans = "";
+
+    while (!st.empty())
     {
-        string prev = str.substr(0, i);
-        string next = str.substr(i + 1);
-        string ros = prev + next;
-
-        solve(ros, ans + str[i], given, res);
+        ans = st.top() + ans;
+        st.pop();
     }
+
+    return ans;
 }
 
 int main()
 {
-    string given = "bcabcdefghijklmnopqrstuv";
-    string res = "";
-    solve("abc", "", given, res);
-    cout << res;
+    cout << smallestSubSeq("cbacdcbc");
     return 0;
 }
